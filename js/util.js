@@ -12,6 +12,7 @@
     vencida: iso => iso && iso < window.odooService.hoy(),
     toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); },
     precioHtml(p) {
+      if (p.desde) return `<b>Desde ${U.cop(p.precio)}</b>${p.notaPrecio ? `<small class="precio-nota">${p.notaPrecio}</small>` : ''}`;
       if (p.gratisPromo) return `<b>Gratis</b><s>${U.cop(p.precio)}</s>`;
       return `<b>${U.cop(p.precio)}</b>${p.precioAntes ? `<s>${U.cop(p.precioAntes)}</s>` : ''}${p.precioEjemplo ? '<span class="tag ex">precio de ejemplo</span>' : ''}`;
     },

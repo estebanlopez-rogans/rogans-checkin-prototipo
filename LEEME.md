@@ -82,7 +82,7 @@ no publica valor en COP.
 | Sesión Única (capilar) | $350.000 (antes $520.000) | https://rogansya.com/cuidado-capilar/ · /tratamiento-capilar/ |
 | Plan Starter | $1.650.000 (antes $2.290.000) | ídem |
 | Plan Advanced ("Más popular") | $2.800.000 (antes $4.240.000) | ídem |
-| Implante Capilar | $9.000.000 (antes $13.000.000; FAQ: "desde $10.000.000"; financiación 0% desde $7.000.000) | ídem |
+| Implante Capilar | Desde $10.000.000 según número de unidades foliculares (confirmado por Esteban) | ídem |
 | Consulta / diagnóstico capilar | $50.000 redimibles | https://rogansya.com/diagnostico-capilar/ |
 | Valoración rejuvenecimiento facial | $75.000 — gratis por tiempo limitado | https://rogansya.com/rejuvenecimiento-facial/ |
 | Valoración cuidado de la piel | $100.000 — gratis | https://rogansya.com/cuidado-de-la-piel/ |

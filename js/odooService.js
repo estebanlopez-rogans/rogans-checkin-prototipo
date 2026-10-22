@@ -13,7 +13,7 @@
  * cambia cuando se conecte Odoo de verdad.
  * ===================================================================== */
 (function () {
-  const KEY = 'rogans-checkin-demo-v1';
+  const KEY = 'rogans-checkin-demo-v2';
   const LATENCIA = 650; // ms, para simular la red
   const D = window.RogansData;
 

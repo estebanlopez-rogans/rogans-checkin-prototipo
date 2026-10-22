@@ -252,3 +252,5 @@ table.list{width:100%;border-collapse:separate;border-spacing:0;background:#fff;
  .summary{grid-template-columns:1fr 1fr}
  .methods{grid-template-columns:repeat(2,1fr)}
 }
+
+.precio-nota{display:block;font-size:.8em;opacity:.75;font-weight:400;margin-top:2px}

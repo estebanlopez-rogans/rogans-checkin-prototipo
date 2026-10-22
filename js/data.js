@@ -19,8 +19,8 @@
     { id: 'cap-advanced', linea: 'capilar', nombre: 'Advanced', precio: 2800000, precioAntes: 4240000, popular: true,
       sesiones: 10, incluye: ['10 mesoterapias', '10 Plasma Rico en Plaquetas', 'Sesión luz LED infrarroja (si lo requiere)', 'Seguimiento médico', 'Kit full casa 6 meses', '50% de descuento en sesiones de exosomas', 'Membresía Advanced'],
       fuente: S + '/cuidado-capilar/' },
-    { id: 'cap-implante', linea: 'capilar', nombre: 'Implante Capilar', precio: 9000000, precioAntes: 13000000,
-      sesiones: 2, incluye: ['Resultados permanentes', 'Precio final según valoración (FAQ: desde $10.000.000)', 'Financiación 0% de interés desde $7.000.000', 'Seguimiento médico'],
+    { id: 'cap-implante', linea: 'capilar', nombre: 'Implante Capilar', precio: 10000000, desde: true, notaPrecio: 'según número de unidades foliculares',
+      sesiones: 2, incluye: ['Resultados permanentes', 'Precio final según el número de unidades foliculares', 'Seguimiento médico'],
       fuente: S + '/cuidado-capilar/' },
     // ---------- Facial (nombres reales de /rejuvenecimiento-facial; precios de EJEMPLO) ----------
     { id: 'fac-toxina', linea: 'facial', nombre: 'Toxina botulínica', precio: 900000, precioEjemplo: true, sesiones: 1,
@@ -77,7 +77,7 @@
     { id: 'PPT', nombre: 'Permiso por protección temporal' },
   ];
 
-  const MOTIVOS = ['Consulta / valoración', 'Sesión de tratamiento', 'Control / seguimiento', 'Procedimiento', 'Compra de productos'];
+  const MOTIVOS = ['Consulta / valoración', 'Control / seguimiento', 'Procedimiento', 'Compra de productos'];
 
   const EPS = ['', 'Particular (sin EPS)', 'Sura', 'Sanitas', 'Compensar', 'Nueva EPS', 'Salud Total', 'Famisanar', 'Medicina prepagada', 'Otra'];
 
@@ -98,7 +98,7 @@
       { id: 502, name: 'FV/2026/0298', partnerId: 102, productId: 'cap-advanced', concepto: 'Plan Advanced (capilar)', fecha: d(-60), vence: d(-30), total: 2800000, residual: 0 },
       { id: 503, name: 'FV/2026/0402', partnerId: 103, productId: 'val-capilar', concepto: 'Consulta capilar', fecha: d(-10), vence: d(-10), total: 50000, residual: 0 },
       { id: 504, name: 'FV/2026/0415', partnerId: 104, productId: 'val-capilar', concepto: 'Consulta capilar', fecha: d(-3), vence: d(0), total: 50000, residual: 50000 },
-      { id: 505, name: 'FV/2026/0187', partnerId: 105, productId: 'cap-implante', concepto: 'Implante Capilar', fecha: d(-95), vence: d(-95), total: 9000000, residual: 0 },
+      { id: 505, name: 'FV/2026/0187', partnerId: 105, productId: 'cap-implante', concepto: 'Implante Capilar', fecha: d(-95), vence: d(-95), total: 10000000, residual: 0 },
       { id: 506, name: 'FV/2026/0431', partnerId: 106, productId: 'cap-sesion-unica', concepto: 'Sesión Única (capilar)', fecha: d(0), vence: d(0), total: 350000, residual: 350000 },
     ];
     // account.payment
@@ -106,7 +106,7 @@
       { id: 701, name: 'PAG/2026/0611', facturaId: 501, partnerId: 101, monto: 1000000, metodo: 'bold', referencia: 'BOLD-DEMO-8841', fecha: d(-40) },
       { id: 702, name: 'PAG/2026/0533', facturaId: 502, partnerId: 102, monto: 2800000, metodo: 'tarjeta', referencia: 'DATAFONO-DEMO-1182', fecha: d(-60) },
       { id: 703, name: 'PAG/2026/0688', facturaId: 503, partnerId: 103, monto: 50000, metodo: 'mercadopago', referencia: 'MP-DEMO-5520', fecha: d(-10) },
-      { id: 704, name: 'PAG/2026/0301', facturaId: 505, partnerId: 105, monto: 9000000, metodo: 'addi', referencia: 'ADDI-DEMO-0042', fecha: d(-95) },
+      { id: 704, name: 'PAG/2026/0301', facturaId: 505, partnerId: 105, monto: 10000000, metodo: 'addi', referencia: 'ADDI-DEMO-0042', fecha: d(-95) },
     ];
     // sale.order (paquete vendido) + control de sesiones
     const paquetes = [
@@ -130,8 +130,8 @@
     // Check-ins de hoy ya registrados (para que el panel no arranque vacío)
     const checkins = [
       { id: 1, turno: 'R-001', partnerId: 105, hora: '07:42', motivo: 'Control / seguimiento', estado: 'atendido', asistencia: true, origen: 'kiosco', interes: null, pagoIntencion: null },
-      { id: 2, turno: 'R-002', partnerId: 102, hora: '08:10', motivo: 'Sesión de tratamiento', estado: 'consulta', asistencia: true, origen: 'kiosco', interes: null, pagoIntencion: null },
-      { id: 3, turno: 'R-003', partnerId: 106, hora: '08:31', motivo: 'Sesión de tratamiento', estado: 'espera', asistencia: false, origen: 'recepcion', interes: null, pagoIntencion: 'recepcion' },
+      { id: 2, turno: 'R-002', partnerId: 102, hora: '08:10', motivo: 'Control / seguimiento', estado: 'consulta', asistencia: true, origen: 'kiosco', interes: null, pagoIntencion: null },
+      { id: 3, turno: 'R-003', partnerId: 106, hora: '08:31', motivo: 'Control / seguimiento', estado: 'espera', asistencia: false, origen: 'recepcion', interes: null, pagoIntencion: 'recepcion' },
     ];
     return { fechaSemilla: d(0), seq: { partner: 200, factura: 600, pago: 800, paquete: 900, visita: 1000, checkin: 3, doc: 500 }, partners, facturas, pagos, paquetes, visitas, checkins };
   }
