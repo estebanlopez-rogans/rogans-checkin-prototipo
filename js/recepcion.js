@@ -8,11 +8,21 @@
 
   function pagoBadge(c) {
     if (c.saldo > 0) return `<span class="tag bad">Pendiente ${U.cop(c.saldo)}</span>`;
-    if (c.pagoIntencion === 'pagado') return `<span class="tag ok">Pagado · Bold</span>`;
+    if (c.pagoIntencion === 'pagado' || (c.compra && c.compra.pagado)) return `<span class="tag ok">Pagado · Bold</span>`;
     return `<span class="tag ok">Al día</span>`;
   }
+  function flags(c) {
+    let h = '';
+    if (c.paqueteNoListado) h += `<span class="tag bad flag">Pide paquete no listado</span>`;
+    if (c.compra) h += `<span class="tag ${c.compra.pagado ? 'ok' : 'info'} flag">Compró en kiosco: ${U.esc(S.producto(c.compra.productId).nombre)}${c.compra.pagado ? ' · pagado Bold' : ' · cobrar'}</span>`;
+    return h;
+  }
   function planCell(c) {
-    if (c.paquetes.length) { const p = c.paquetes[0]; return `<b>${U.esc(p.nombre)}</b><br><small style="color:var(--muted)">${p.sesionesUsadas}/${p.sesionesTotal} sesiones</small>`; }
+    const f = flags(c);
+    // Plan principal: el más antiguo activo que no sea la compra de hoy
+    const otros = c.paquetes.filter(p => !(c.compra && p.id === c.compra.paqueteId));
+    if (otros.length) { const p = otros[0]; return `<b>${U.esc(p.nombre)}</b><br><small style="color:var(--muted)">${p.sesionesUsadas}/${p.sesionesTotal} sesiones</small>${f ? '<br>' + f : ''}`; }
+    if (f) return f;
     if (c.interes) return `<span class="tag info">Interés: ${U.esc(S.producto(c.interes).nombre)}</span>`;
     return `<span class="tag warn">Sin paquete</span>`;
   }
@@ -23,10 +33,10 @@
     $('#kpis').innerHTML = `<div class="kpi"><small>Check-ins hoy</small><b>${k.total}</b></div><div class="kpi"><small>En espera</small><b>${k.espera}</b></div>
       <div class="kpi"><small>En consulta</small><b>${k.consulta}</b></div><div class="kpi"><small>Atendidos</small><b>${k.atendido}</b></div>
       <div class="kpi red"><small>Por cobrar (pacientes de hoy)</small><b>${U.cop(k.saldo)}</b></div>`;
-    const fs = [['todos', 'Todos'], ['espera', 'En espera'], ['consulta', 'En consulta'], ['atendido', 'Atendidos'], ['saldo', 'Con saldo']];
+    const fs = [['todos', 'Todos'], ['espera', 'En espera'], ['consulta', 'En consulta'], ['atendido', 'Atendidos'], ['saldo', 'Con saldo'], ['nolistado', 'Paquete no listado']];
     $('#filters').innerHTML = fs.map(([id, n]) => `<button data-f="${id}" class="${filtro === id ? 'on' : ''}">${n}</button>`).join('');
     const qq = q.toLowerCase().replace(/\./g, '');
-    const vis = lista.filter(c => (filtro === 'todos' || (filtro === 'saldo' ? c.saldo > 0 : c.estado === filtro)) &&
+    const vis = lista.filter(c => (filtro === 'todos' || (filtro === 'saldo' ? c.saldo > 0 : filtro === 'nolistado' ? c.paqueteNoListado : c.estado === filtro)) &&
       (!qq || c.paciente.documento.includes(qq) || c.paciente.nombre.toLowerCase().includes(qq)));
     $('#rows').innerHTML = vis.length ? vis.map(c => `<tr data-id="${c.id}">
       <td class="turn">${c.turno}</td><td>${c.hora}<br><small style="color:var(--muted)">${c.origen === 'kiosco' ? 'Kiosco' : 'Recepción'}</small></td>
@@ -75,7 +85,9 @@
     let contenido = '';
     if (tab === 'resumen') {
       const int = c.interes && !activos.some(a => a.productId === c.interes) ? S.producto(c.interes) : null;
-      contenido = `${saldoBox}
+      const alerta = c.paqueteNoListado ? `<div class="alert-nl"><b>🔎 Pide un paquete que no está en el catálogo del kiosco</b><small>Pregúntale qué busca y véndelo desde “Asignar / vender paquete”, o déjalo anotado para el médico.</small><button class="btn sm dark" data-vender="">Asignar / vender paquete</button></div>` : '';
+      const compraBox = c.compra ? `<div class="box"><h4>Compra hecha en el kiosco</h4><div class="row"><div class="grow"><b>${U.esc(S.producto(c.compra.productId).nombre)} · ${U.cop(c.compra.total)}</b><small>${U.esc(c.compra.factura || '')} · ${c.compra.pagado ? 'pagado con link Bold' : 'eligió pagar en recepción'}</small></div>${c.compra.pagado ? '<span class="tag ok">Pagado · Bold</span>' : (pend.some(f => f.id === c.compra.facturaId) ? `<button class="btn sm dark" data-pagar="${c.compra.facturaId}">Cobrar</button>` : '<span class="tag ok">Pagado</span>')}</div></div>` : '';
+      contenido = `${alerta}${saldoBox}${compraBox}
         <div class="box"><h4>Plan / paquete <span class="sp"></span><button class="btn sm ghost" data-vender="">Asignar / vender paquete</button></h4>
           ${activos.length ? activos.map(paqRow).join('') : `<div class="row"><div class="grow"><b>Sin paquete activo</b><small>Ofrecer: capilar (alopecia), facial, corporal u otras líneas.</small></div><span class="tag warn">Sin paquete</span></div>`}
           ${int ? `<div class="row"><div class="grow"><b>Interés marcado en el kiosco: ${U.esc(int.nombre)}</b><small>${U.cop(int.precio)}${int.precioEjemplo ? ' · precio de ejemplo' : ''}</small></div><button class="btn sm dark" data-vender="${int.id}">Vender este paquete</button></div>` : ''}</div>

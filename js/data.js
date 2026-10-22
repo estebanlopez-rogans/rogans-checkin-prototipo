@@ -77,7 +77,19 @@
     { id: 'PPT', nombre: 'Permiso por protección temporal' },
   ];
 
-  const MOTIVOS = ['Consulta / valoración', 'Control / seguimiento', 'Procedimiento', 'Compra de productos'];
+  const MOTIVOS = ['Consulta / valoración', 'Control / seguimiento', 'Tratamiento capilar', 'Tratamiento facial', 'Tratamiento corporal', 'Otros servicios', 'Paquete no listado', 'Procedimiento', 'Compra de productos'];
+
+  // Opciones de "¿A qué vienes hoy?" en el kiosco. `linea` => el paciente puede COMPRAR paquetes de esa línea.
+  // `noListado` => termina el flujo con "acércate a recepción" y marca el check-in.
+  const MOTIVOS_KIOSCO = [
+    { id: 'consulta', motivo: 'Consulta / valoración', titulo: 'Consulta o valoración', desc: 'Primera vez o cita con el médico', icono: '🩺' },
+    { id: 'control', motivo: 'Control / seguimiento', titulo: 'Control o sesión de mi plan', desc: 'Ya tengo un tratamiento en curso', icono: '📅' },
+    { id: 'capilar', motivo: 'Tratamiento capilar', linea: 'capilar', titulo: 'Tratamiento capilar', desc: 'Alopecia · quiero comprar un paquete', icono: '💆' },
+    { id: 'facial', motivo: 'Tratamiento facial', linea: 'facial', titulo: 'Tratamiento facial', desc: 'Toxina, ácido hialurónico, Harmonyca…', icono: '✨' },
+    { id: 'corporal', motivo: 'Tratamiento corporal', linea: 'corporal', titulo: 'Tratamiento corporal', desc: 'Sueroterapia, hidrolipoclasia…', icono: '🧘' },
+    { id: 'otras', motivo: 'Otros servicios', linea: 'otras', titulo: 'Otros servicios', desc: 'Rendimiento sexual, nutrición, psicología', icono: '➕' },
+    { id: 'noListado', motivo: 'Paquete no listado', noListado: true, titulo: 'Busco otro paquete', desc: 'No aparece lo que busco', icono: '🔎' },
+  ];
 
   const EPS = ['', 'Particular (sin EPS)', 'Sura', 'Sanitas', 'Compensar', 'Nueva EPS', 'Salud Total', 'Famisanar', 'Medicina prepagada', 'Otra'];
 
@@ -136,5 +148,5 @@
     return { fechaSemilla: d(0), seq: { partner: 200, factura: 600, pago: 800, paquete: 900, visita: 1000, checkin: 3, doc: 500 }, partners, facturas, pagos, paquetes, visitas, checkins };
   }
 
-  window.RogansData = { CATALOGO, LINEAS, METODOS_PAGO, TIPOS_DOC, MOTIVOS, EPS, semilla };
+  window.RogansData = { CATALOGO, LINEAS, METODOS_PAGO, TIPOS_DOC, MOTIVOS, MOTIVOS_KIOSCO, EPS, semilla };
 })();

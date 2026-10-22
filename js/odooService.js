@@ -156,14 +156,21 @@
 
     /**
      * Registrar check-in (turno). No existe modelo estándar: sugerido modelo propio `x_rogans.checkin`
-     * (partner_id, turno, motivo, estado, origen, interes_product_id) o usar calendar.event.attendee_ids.
+     * (partner_id, turno, motivo, estado, origen, interes_product_id,
+     * compra_sale_order_id, x_paquete_no_listado) o usar calendar.event.attendee_ids.
      */
-    async registrarCheckin({ partnerId, motivo, interes, pagoIntencion, origen }) {
+    async registrarCheckin({ partnerId, motivo, interes, pagoIntencion, origen, compra, paqueteNoListado }) {
       await espera(500);
       const s = load();
       const ya = s.checkins.find(c => c.partnerId === partnerId && c.estado !== 'atendido');
-      if (ya) { Object.assign(ya, { motivo: motivo || ya.motivo, interes: interes || ya.interes, pagoIntencion: pagoIntencion || ya.pagoIntencion }); save(s); return clone(ya); }
-      const c = { id: ++s.seq.checkin, turno: 'R-' + pad(s.seq.checkin, 3), partnerId, hora: horaActual(), motivo: motivo || 'Consulta / valoración', estado: 'espera', asistencia: false, origen: origen || 'kiosco', interes: interes || null, pagoIntencion: pagoIntencion || null };
+      if (ya) {
+        Object.assign(ya, { motivo: motivo || ya.motivo, interes: interes || ya.interes, pagoIntencion: pagoIntencion || ya.pagoIntencion,
+          compra: compra || ya.compra || null, paqueteNoListado: !!(paqueteNoListado || ya.paqueteNoListado) });
+        save(s); return clone(ya);
+      }
+      const c = { id: ++s.seq.checkin, turno: 'R-' + pad(s.seq.checkin, 3), partnerId, hora: horaActual(), motivo: motivo || 'Consulta / valoración', estado: 'espera', asistencia: false, origen: origen || 'kiosco', interes: interes || null, pagoIntencion: pagoIntencion || null,
+        compra: compra || null, // { productId, facturaId, paqueteId, pagado, metodo } — compra hecha en el kiosco (sale.order + account.move)
+        paqueteNoListado: !!paqueteNoListado }; // el paciente pide un paquete que no está en el catálogo → atender en recepción
       s.checkins.push(c); save(s); return clone(c);
     },
 

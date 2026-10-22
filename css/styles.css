@@ -254,3 +254,26 @@ table.list{width:100%;border-collapse:separate;border-spacing:0;background:#fff;
 }
 
 .precio-nota{display:block;font-size:.8em;opacity:.75;font-weight:400;margin-top:2px}
+
+/* ---- Motivo de la visita (kiosco) ---- */
+.motivos{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:1.3rem}
+.motivo{display:flex;gap:.9rem;align-items:center;text-align:left;background:#fff;border:2px solid transparent;border-radius:18px;padding:1rem 1.1rem;box-shadow:var(--sh);min-height:96px;position:relative;flex-wrap:wrap}
+.motivo .mi{width:48px;height:48px;border-radius:14px;background:var(--mint);display:grid;place-items:center;font-size:1.5rem;flex:0 0 auto}
+.motivo b{display:block;font-size:1.05rem}.motivo small{color:var(--muted);font-size:.82rem}
+.motivo>span:nth-child(2){flex:1;min-width:0}
+.motivo .tag{position:absolute;top:-9px;right:12px}
+.motivo.on{border-color:var(--teal);box-shadow:0 0 0 4px rgba(0,208,192,.22)}
+.motivo.otro{background:#fffaf0;border:2px dashed #f0c96a}
+.motivo.otro.on{border-style:solid;border-color:var(--amber)}
+.otro-link{align-self:flex-start;margin-top:.9rem;background:#fffaf0;border:2px dashed #f0c96a;color:var(--dark);border-radius:999px;padding:.6rem 1.1rem;font-weight:600;font-size:.92rem}
+.done .big.warn{background:#ffcf5c}
+.card.buy h2{font-size:1.6rem;margin:.1rem 0 .6rem}
+.buy-list{list-style:none;display:grid;gap:.3rem;font-size:.92rem}
+.buy-list li::before{content:"✓ ";color:var(--teal2);font-weight:700}
+.buy-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:1rem;padding-top:.9rem}
+.buy-total .price{display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap;justify-content:flex-end}.buy-total .price b{font-size:1.6rem}
+/* ---- Recepción: alertas ---- */
+.flag{margin-top:.25rem}
+.alert-nl{background:var(--amberbg);border:1px solid #f0c96a;border-radius:14px;padding:.9rem 1rem;display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;align-items:center}
+.alert-nl b{color:var(--dark)}.alert-nl small{color:var(--ink);grid-column:1}.alert-nl button{grid-column:2;grid-row:1/3}
+@media (max-width:1000px){.motivos{grid-template-columns:1fr 1fr}}

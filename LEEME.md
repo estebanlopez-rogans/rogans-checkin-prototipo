@@ -27,12 +27,13 @@ En el iPad: Safari → Compartir → "Agregar a inicio" y usar Acceso Guiado par
 | Documento | Paciente (ficticio) | Qué muestra |
 |---|---|---|
 | CC 1010101010 | Carlos Andrés Prueba Gómez | Saldo pendiente vencido ($650.000) + plan Starter activo |
-| CC 52000111 | Laura Ejemplo Martínez | Al día + plan Advanced activo (no ve catálogo) |
-| CC 79000222 | Andrés Demo Rojas | Al día, sin paquete → ve el catálogo |
+| CC 52000111 | Laura Ejemplo Martínez | Al día + plan capilar Advanced activo → elegir "Tratamiento facial" y **comprar** un paquete facial con link Bold |
+| CC 79000222 | Andrés Demo Rojas | Al día, sin paquete → "Tratamiento facial", comprar Ácido hialurónico y **pagar en recepción** |
 | CE 600123 | María Ficticia López | Consulta pendiente ($50.000) + sin paquete + sin autorización Ley 1581 |
 | CC 1020304050 | Jorge Ficticio Peña | Sesión Única pendiente de pago ($350.000) → probar "Pagar con link Bold" |
 | CC 1000000005 | Sofía Muestra Ruiz | Implante capilar financiado con Addi, al día |
 | Cualquier otro (ej. CC 1234567890) | — | Paciente nuevo → formulario de registro |
+| Cualquiera | — | Elegir **"Busco otro paquete"** → "Por favor acércate a recepción" + turno |
 
 ## Flujo
 
@@ -41,21 +42,35 @@ En el iPad: Safari → Compartir → "Agregar a inicio" y usar Acceso Guiado par
 2. Tipo de documento (CC, CE, TI, PA, PPT) + número en teclado numérico.
 3. "Consultando en Odoo…" (simulado).
 4. Confirmar/actualizar datos: nombre, celular, correo, fecha de nacimiento, EPS (opcional),
-   dirección, contacto de emergencia, motivo de la visita y autorización de datos (Ley 1581 de 2012).
+   dirección, contacto de emergencia y autorización de datos (Ley 1581 de 2012).
    Si no existe en Odoo, el mismo formulario sirve de registro de paciente nuevo.
-5. Estado de cuenta: "Al día" o "Saldo pendiente" con el detalle de facturas.
+5. **"¿A qué vienes hoy?"**: Consulta / valoración · Control o sesión de mi plan · Tratamiento capilar ·
+   Tratamiento facial · Tratamiento corporal · Otros servicios · **Busco otro paquete (no aparece lo que busco)**.
+6. Estado de cuenta: "Al día" o "Saldo pendiente" con el detalle de facturas.
    El paciente elige pagar en recepción o con link Bold (QR simulado + "Simular pago aprobado").
-6. Si **no tiene paquete activo**, ve el catálogo por línea: Capilar (alopecia), Facial, Corporal y
-   Otras líneas. Puede marcar un plan de interés o decir "lo hablo con mi médico".
-7. Resumen y **"Check-in completado"** con número de turno (R-001, R-002…). Vuelve al inicio en 30 s.
+7. Según el motivo:
+   - **Tratamiento capilar / facial / corporal / otros:** "Compra tu paquete" de esa línea (aunque ya
+     tenga un plan activo de otra línea, p. ej. plan capilar y hoy viene por facial). Elige el paquete y
+     paga con **link Bold** (queda pagado) o **"Pagar en recepción"** (queda la venta y la factura
+     pendiente para que recepción cobre). Los productos con precio "Desde" (Implante Capilar, desde
+     $10.000.000 según número de unidades foliculares) solo se pueden pagar en recepción. También puede
+     decir "Ahora no, solo mi cita".
+   - **Busco otro paquete** (o el botón "no aparece lo que busco" en cualquier catálogo): pantalla
+     **"Por favor acércate a recepción"** con su turno; recepción ve la alerta "Pide paquete no listado".
+   - **Consulta / Control:** como antes; si **no tiene paquete activo**, ve el catálogo por línea y puede
+     marcar un plan de interés o decir "lo hablo con mi médico".
+8. Resumen y **"Check-in completado"** con número de turno (R-001, R-002…). Vuelve al inicio en 30 s.
 
 **Panel de recepción**
 - Lista de check-ins de hoy: turno, hora, origen (kiosco/recepción), motivo, plan, estado de pago y
-  estado (en espera / en consulta / atendido). Indicadores y filtros; búsqueda por cédula o nombre.
+  estado (en espera / en consulta / atendido). Indicadores y filtros (incluye "Paquete no listado");
+  búsqueda por cédula o nombre.
+- Etiquetas en la columna Plan: **"Pide paquete no listado"** y **"Compró en kiosco: X · pagado Bold / cobrar"**.
 - Si se busca una cédula que no está en la lista: hacer check-in manual del paciente existente o
   registrar un paciente nuevo.
 - Ficha del paciente (panel lateral):
-  - **Resumen:** saldo, plan activo, interés marcado en el kiosco, contacto, Ley 1581.
+  - **Resumen:** alerta de paquete no listado, saldo, compra hecha en el kiosco (con botón Cobrar si
+    eligió pagar en recepción), plan activo, interés marcado en el kiosco, contacto, Ley 1581.
   - **Datos:** editar y guardar.
   - **Pagos:** facturas y pagos; registrar pago con efectivo, tarjeta (datáfono), transferencia,
     link Bold, Mercado Pago, Addi o Sistecrédito (permite abonos parciales).
@@ -107,6 +122,8 @@ función por una llamada a un **backend propio** (proxy) que habla con Odoo por 
 | `registrarPago` | `account.payment` (o `account.payment.register`) | crear y conciliar con la factura; diario según método |
 | `obtenerPaquetes` | `product.product` / `product.template` | catálogo por categoría (capilar, facial, corporal…) |
 | `venderPaquete` | `sale.order` + `sale.order.line` → factura | `create`, `action_confirm`, facturar |
+| Compra en el kiosco (`venderPaquete` + `registrarPago` Bold) | `sale.order` + factura; pago Bold vía webhook | si elige "pagar en recepción" la factura queda `posted` con saldo |
+| `registrarCheckin` (motivo, `paqueteNoListado`, compra) | modelo de check-in / `calendar.event` | campos sugeridos `x_motivo`, `x_paquete_no_listado`, `compra_sale_order_id` |
 | `obtenerPaquetesPaciente` / `registrarSesion` | `sale.order` (o módulo de sesiones / `project.task` / citas) | por definir |
 | `registrarCheckin` / `listarCheckinsHoy` / `actualizarCheckin` | modelo nuevo `x_checkin` o `calendar.event`/citas | por definir |
 | `obtenerHistorial` | `calendar.event` / visitas | por definir |
