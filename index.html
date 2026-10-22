@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#003334">
+<title>Rogans · Check-in (prototipo)</title>
+<link rel="icon" href="assets/img/icon-32.png">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="kiosk">
+  <header class="k-top">
+    <img id="klogo" src="assets/img/logo-rogans-negro.svg" alt="Rogans">
+    <div class="k-steps" id="ksteps"></div>
+    <div class="sp"></div>
+    <span class="demo-badge">Datos de ejemplo — sin conexión a Odoo</span>
+    <span class="clock" id="kclock"></span>
+    <a class="rec-link" href="recepcion.html" target="_blank" rel="noopener">Panel de recepción ↗</a>
+  </header>
+  <main class="k-body" id="kbody"></main>
+</div>
+<script src="js/data.js"></script>
+<script src="js/odooService.js"></script>
+<script src="js/util.js"></script>
+<script src="js/kiosk.js"></script>
+</body>
+</html>

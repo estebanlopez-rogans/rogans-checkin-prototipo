@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Rogans · Panel de recepción (prototipo)</title>
+<link rel="icon" href="assets/img/icon-32.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="rec">
+  <header class="r-top">
+    <img src="assets/img/logo-blanco.svg" alt="Rogans">
+    <span class="title">Recepción · Check-in de hoy</span>
+    <span class="sp"></span>
+    <span class="demo-badge">Datos de ejemplo — sin conexión a Odoo</span>
+    <a href="index.html" target="_blank" rel="noopener">Abrir kiosco ↗</a>
+    <a href="#" id="reset">Reiniciar demo</a>
+  </header>
+  <main class="r-main">
+    <div class="kpis" id="kpis"></div>
+    <div class="toolbar">
+      <div class="search"><input id="q" placeholder="Buscar por cédula o nombre…" inputmode="search" autocomplete="off"></div>
+      <div class="filters" id="filters"></div>
+      <button class="btn sm dark" id="nuevo">+ Check-in manual</button>
+    </div>
+    <div id="lookup"></div>
+    <table class="list"><thead><tr><th>Turno</th><th>Hora</th><th>Paciente</th><th>Motivo</th><th>Plan</th><th>Pago</th><th>Estado</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+  </main>
+</div>
+<div id="drawer-root"></div>
+<div id="modal-root"></div>
+<script src="js/data.js"></script>
+<script src="js/odooService.js"></script>
+<script src="js/util.js"></script>
+<script src="js/recepcion.js"></script>
+</body>
+</html>
