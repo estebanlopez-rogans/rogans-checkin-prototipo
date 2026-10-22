@@ -25,7 +25,7 @@
         <div class="tile"><span class="n">3</span><div><b>Revisa tu cuenta</b><small>Pagos y tu plan de tratamiento</small></div></div>
         <div class="tile"><span class="n">4</span><div><b>Recibe tu turno</b><small>Y dirígete a recepción</small></div></div>
       </div>
-      <div class="meta"><span>Autopista Norte # 106-71 · Bogotá</span><span class="demo-badge">Datos de ejemplo — sin conexión a Odoo</span></div>
+      <div class="meta"><span>Autopista Norte # 106-71 · Bogotá</span></div>
     </section>`, 0);
     $('#go').onclick = documento;
   }

@@ -7,13 +7,14 @@
 --r:18px;--sh:0 10px 30px rgba(0,51,52,.08)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{font-family:Poppins,system-ui,sans-serif;color:var(--dark);background:var(--mint);-webkit-text-size-adjust:100%}
+html{height:-webkit-fill-available}
+body{overscroll-behavior:none;font-family:Poppins,system-ui,sans-serif;color:var(--dark);background:var(--mint);-webkit-text-size-adjust:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
 input,select,textarea{font:inherit;color:inherit}
 .hidden{display:none!important}
 .demo-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:600;letter-spacing:.02em;color:var(--amber);background:var(--amberbg);border:1px solid #f1d58a;border-radius:999px;padding:.25rem .7rem;white-space:nowrap}
 .demo-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#f5b301}
-.tag{display:inline-block;font-size:.7rem;font-weight:600;border-radius:999px;padding:.15rem .6rem;white-space:nowrap}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;border-radius:999px;padding:.15rem .6rem;white-space:nowrap}
 .tag.ok{background:var(--greenbg);color:var(--green)} .tag.bad{background:var(--redbg);color:var(--red)}
 .tag.warn{background:var(--amberbg);color:var(--amber)} .tag.info{background:var(--bluebg);color:var(--blue)} .tag.mute{background:#eef3f3;color:var(--muted)}
 .tag.ex{background:#fff;border:1px dashed #e0a800;color:var(--amber)}
@@ -26,7 +27,7 @@ input,select,textarea{font:inherit;color:inherit}
 .card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:1.4rem}
 
 /* ================= KIOSK ================= */
-.kiosk{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;user-select:none;-webkit-user-select:none}
+.kiosk{height:100vh;height:-webkit-fill-available;height:100dvh;touch-action:manipulation;display:flex;flex-direction:column;overflow:hidden;user-select:none;-webkit-user-select:none}
 .k-top{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;background:#fff;border-bottom:1px solid var(--line);flex:0 0 auto}
 .k-top img{height:26px}
 .k-top .sp{flex:1}
@@ -124,7 +125,7 @@ input,select,textarea{font:inherit;color:inherit}
 .qrbox{display:flex;gap:1rem;align-items:center;background:#fff;border-radius:16px;padding:1rem;border:2px dashed var(--teal)}
 .qrbox .qr{width:120px;height:120px;flex:0 0 auto;background:
  repeating-linear-gradient(90deg,var(--dark) 0 8px,transparent 8px 14px),repeating-linear-gradient(0deg,var(--dark) 0 6px,transparent 6px 15px);opacity:.85;border-radius:8px;position:relative}
-.qrbox .qr::after{content:"DEMO";position:absolute;inset:40% 18%;background:#fff;display:grid;place-items:center;font-size:.7rem;font-weight:700;color:var(--amber)}
+.qrbox .qr::after{content:"DEMO";position:absolute;top:40%;right:18%;bottom:40%;left:18%;background:#fff;display:grid;place-items:center;font-size:.7rem;font-weight:700;color:var(--amber)}
 .pkg-active{display:flex;gap:1rem;align-items:center}
 .progress{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:.5rem}
 .progress i{display:block;height:100%;background:var(--teal)}
@@ -136,7 +137,7 @@ input,select,textarea{font:inherit;color:inherit}
 .pkgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-top:1.2rem}
 .pkg{position:relative;text-align:left;background:#fff;border:2px solid transparent;border-radius:20px;padding:1.2rem 1.2rem 1rem;box-shadow:var(--sh);display:flex;flex-direction:column;gap:.5rem;min-height:250px}
 .pkg.on{border-color:var(--teal);box-shadow:0 0 0 4px rgba(0,208,192,.25)}
-.pkg .pop{position:absolute;top:-10px;right:14px;background:var(--teal);color:var(--dark);font-size:.7rem;font-weight:700;border-radius:999px;padding:.2rem .7rem}
+.pkg .pop{position:absolute;top:-10px;right:14px;background:var(--teal);color:var(--dark);font-size:.75rem;font-weight:700;border-radius:999px;padding:.2rem .7rem}
 .pkg h3{font-size:1.2rem}
 .pkg ul{list-style:none;font-size:.82rem;color:var(--ink);display:grid;gap:.2rem}
 .pkg ul li::before{content:"✓ ";color:var(--teal2);font-weight:700}
@@ -192,7 +193,7 @@ table.list{width:100%;border-collapse:separate;border-spacing:0;background:#fff;
 .lookup-result .sp{flex:1}
 
 /* drawer */
-.scrim{position:fixed;inset:0;background:rgba(0,30,31,.35);z-index:20;animation:fadein .2s}
+.scrim{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,30,31,.35);z-index:20;animation:fadein .2s}
 @keyframes fadein{from{opacity:0}}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,96vw);background:#fbfefe;z-index:21;box-shadow:-10px 0 40px rgba(0,0,0,.15);display:flex;flex-direction:column;animation:slide .25s ease}
 @keyframes slide{from{transform:translateX(40px);opacity:0}}
@@ -226,7 +227,7 @@ table.list{width:100%;border-collapse:separate;border-spacing:0;background:#fff;
 .saldo .grow{flex:1}
 
 /* modal */
-.modal{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(0,30,31,.45);animation:fadein .2s}
+.modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:30;display:grid;place-items:center;background:rgba(0,30,31,.45);animation:fadein .2s}
 .modal .m{background:#fff;border-radius:22px;width:min(620px,94vw);max-height:92vh;overflow:auto;padding:1.4rem 1.6rem;box-shadow:0 30px 80px rgba(0,0,0,.3)}
 .modal h3{font-size:1.25rem;margin-bottom:.2rem}.modal .sub{color:var(--muted);font-size:.85rem;margin-bottom:1rem}
 .methods{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.4rem 0 1rem}
@@ -277,3 +278,120 @@ table.list{width:100%;border-collapse:separate;border-spacing:0;background:#fff;
 .alert-nl{background:var(--amberbg);border:1px solid #f0c96a;border-radius:14px;padding:.9rem 1rem;display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;align-items:center}
 .alert-nl b{color:var(--dark)}.alert-nl small{color:var(--ink);grid-column:1}.alert-nl button{grid-column:2;grid-row:1/3}
 @media (max-width:1000px){.motivos{grid-template-columns:1fr 1fr}}
+
+/* ================= RESPONSIVE iPad (v3) ================= */
+.demo-badge .s,.rec-link .s{display:none}
+.k-top .clock{white-space:nowrap}
+.k-top a.rec-link{white-space:nowrap;display:inline-flex;align-items:center;gap:.25rem;min-height:32px}
+/* safe areas (iPad sin botón de inicio, modo app a pantalla completa) */
+.k-top{padding-top:max(1rem,env(safe-area-inset-top));padding-left:max(2rem,env(safe-area-inset-left));padding-right:max(2rem,env(safe-area-inset-right))}
+.screen:not(.welcome){padding-left:max(3rem,env(safe-area-inset-left));padding-right:max(3rem,env(safe-area-inset-right))}
+/* barra de acciones fija: fondo sólido para que nada quede "medio tapado" */
+.k-actions{background:var(--mint);box-shadow:0 -14px 18px -14px rgba(0,51,52,.28);margin-left:-.5rem;margin-right:-.5rem;padding-left:.5rem;padding-right:.5rem;padding-bottom:max(.4rem,env(safe-area-inset-bottom))}
+.welcome .k-actions,.done .k-actions{box-shadow:none}
+
+/* ---- iPad horizontal con barra de Safari (≈1180×740, 1024×768, 1080×810) ---- */
+@media (min-width:1001px) and (max-height:860px){
+ .screen{padding-top:1.3rem;padding-bottom:1rem}
+ .screen h1{font-size:2rem}
+ .screen .lead{font-size:1.05rem}
+ .welcome h1{font-size:3rem}.welcome .logo{margin-bottom:1.4rem}.welcome p{margin-bottom:1.8rem}
+ .k-actions{padding-top:.8rem}
+ .k-actions .btn{min-height:58px;padding:.8rem 1.6rem;white-space:nowrap;font-size:1.05rem}
+ .linetabs{margin-top:.7rem}
+ .pkg ul{margin:.5rem 0}
+ .docgrid{margin-top:1rem;gap:2rem}
+ .tipos{margin:.6rem 0 1rem}
+ .docdisplay{min-height:80px;font-size:2.3rem;padding:.9rem 1.3rem}
+ .keypad{gap:.7rem}.keypad button{height:70px}
+ .demo-hint{margin-top:.8rem}
+ .form{gap:.55rem 1rem;margin-top:.8rem}
+ .field input,.field select,.field textarea{min-height:48px;padding:.6rem .9rem}
+ .avatar{width:54px;height:54px;font-size:1.2rem}
+ .found-banner{margin-top:.6rem}
+ .consent{padding:.75rem 1rem}
+ .paygrid{margin-top:1rem}
+ .status-hero{padding:1.2rem 1.5rem}
+ .linetabs{margin-top:.9rem}.linetabs button{min-height:48px;padding:.55rem 1.2rem}
+ .pkgs{grid-template-columns:repeat(auto-fill,minmax(205px,1fr));margin-top:1rem}
+ .pkg{min-height:0;padding:1.1rem 1.1rem .9rem}
+ .pkg h3{font-size:1.1rem;padding-right:2rem}
+ .motivos{margin-top:1rem;gap:.8rem}.motivo{min-height:88px}
+ .qrbox .qr{width:104px;height:104px}
+ .done .big{width:92px;height:92px;font-size:2.8rem}
+ .turno{margin:1rem 0;padding:1rem 2.2rem}.turno b{font-size:3rem}
+}
+
+/* ---- iPad vertical y anchos estrechos (768–1000 px) ---- */
+@media (max-width:1000px){
+ /* encabezado compacto en una sola fila */
+ .k-top{gap:.7rem;padding-top:max(.75rem,env(safe-area-inset-top));padding-bottom:.75rem;padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right))}
+ .k-top img{height:22px}
+ .k-steps{gap:.3rem}.k-steps i{width:16px;height:5px}
+ .demo-badge .l,.rec-link .l{display:none}
+ .demo-badge .s,.rec-link .s{display:inline}
+ .k-top .demo-badge{font-size:.72rem;padding:.25rem .6rem}
+ .k-top .clock{font-size:.85rem}
+ .k-top a.rec-link{font-size:.78rem;padding:.3rem .75rem}
+ .screen{padding:1.5rem max(1.5rem,env(safe-area-inset-right)) 1.2rem max(1.5rem,env(safe-area-inset-left))}
+ .screen h1{font-size:2.05rem}
+ .screen .lead{font-size:1.05rem}
+ .k-actions .btn{min-height:60px;padding:.9rem 1.8rem;font-size:1.1rem}
+ /* bienvenida: pasos debajo del botón en vez de ocultos */
+ .welcome{justify-content:center;padding:2.5rem max(2.5rem,env(safe-area-inset-left))}
+ .welcome h1{font-size:2.7rem;max-width:16ch}
+ .welcome p{font-size:1.2rem;margin:.8rem 0 2rem}
+ .welcome .tiles{display:grid;position:relative;right:auto;top:auto;transform:none;grid-template-columns:1fr 1fr;margin-top:2.6rem;width:100%;max-width:640px}
+ .welcome .tile{min-width:0;padding:.9rem 1.1rem}
+ .welcome .meta{position:relative;left:auto;bottom:auto;margin-top:2rem}
+ .welcome::after{width:90vw;height:90vw;right:-35vw;top:-25vw}
+ /* documento: teclado centrado, todo en una columna sin scroll */
+ .docgrid{display:flex;flex-direction:column;align-items:stretch;gap:0;margin-top:.9rem}
+ .docgrid>div:first-child{display:contents}
+ .tipos{order:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.5rem;margin:0 0 .8rem}
+ .tipos button{padding:.55rem .6rem;min-height:60px;text-align:center}
+ .tipos button small{font-size:.72rem;line-height:1.2;margin-top:.1rem}
+ .docdisplay{order:2;min-height:76px;font-size:2.2rem;padding:.8rem 1.2rem;justify-content:center}
+ .err{order:3;text-align:center;min-height:1.2rem;margin-top:.3rem}
+ .keypad{order:4;width:100%;max-width:520px;margin:0 auto;gap:.65rem}
+ .keypad button{height:70px}
+ .demo-hint{order:5;margin-top:1rem;text-align:center}
+ .demo-hint .chips{justify-content:center}
+ .demo-hint .chips button{min-height:36px}
+ /* formulario y pagos */
+ .form{grid-template-columns:1fr 1fr;gap:.7rem 1rem}
+ .paygrid{gap:1.1rem;margin-top:1.1rem}
+ .status-hero{padding:1.2rem 1.4rem}
+ .status-hero .amt b{font-size:1.6rem}
+ /* catálogo: 2 columnas, tarjetas sin altura fija */
+ .linetabs{gap:.5rem}.linetabs button{min-height:50px;padding:.6rem 1.1rem}
+ .pkgs{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
+ .pkg{min-height:0}
+ .pkg h3{padding-right:2rem}
+ .motivos{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .motivo{min-height:92px}
+ .qrbox .qr{width:100px;height:100px}
+ .card.buy{padding:1.2rem 1.3rem}
+ .summary{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+/* vertical con poca altura útil (iPad mini / barra de Safari) */
+@media (max-width:1000px) and (max-height:1000px){
+ .screen h1{font-size:1.9rem}
+ .keypad button{height:64px}
+ .docdisplay{min-height:68px;font-size:2rem}
+ .tipos button{min-height:56px}
+ .card.buy .buy-list{gap:.15rem}
+ .card.buy h2{font-size:1.4rem;margin-bottom:.4rem}
+ .buy-total{margin-top:.7rem;padding-top:.7rem}
+ .payopt{min-height:64px;padding:.75rem 1rem;margin-bottom:.55rem}
+}
+@media (max-width:700px){
+ .k-steps{display:none}
+ .summary,.motivos,.pkgs{grid-template-columns:1fr}
+ .welcome .tiles{grid-template-columns:1fr}
+}
+
+/* iOS hace zoom en campos con letra < 16px: en pantallas táctiles los subimos a 16px */
+@media (pointer:coarse){
+ input:not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px!important}
+}
